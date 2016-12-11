@@ -1,7 +1,7 @@
 # Introduction
-***  
 
-## ** UserAuth4JWT ** 
+
+## UserAuth4JWT
 <br>
   
 ** JWT를 이용한 사용자 인증을 처리하는 것을 샘플로 구현한 프로젝트입니다.**  
