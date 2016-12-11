@@ -10,3 +10,6 @@
 .settings/
 target/
 Users/
+UserAuth4JWT/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml
+
+UserAuth4JWT/src/main/webapp/WEB-INF/spring/root-context.xml
