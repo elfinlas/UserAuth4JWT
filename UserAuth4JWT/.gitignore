@@ -1,0 +1,7 @@
+# ignore sts default file 
+.classpath
+.project
+.springBeans
+.settings/
+/target/
+/Users/

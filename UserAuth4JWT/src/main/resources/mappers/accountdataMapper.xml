@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mhlab.userauth.AccountDataMapper">
+
+<!-- Create -->
+<insert id="ta_insert">
+	INSERT INTO tbl_account_data (ta_id, ta_pw, ta_create_date, ta_secret_key)
+	VALUES(#{ta_id}, #{ta_pw}, now(), #{ta_secret_key})
+	
+	<!-- Insert 이후 저장된 idx를 가져오는 MyBatis 문법 3.x의 Mysql 용 -->
+	<selectKey keyProperty="ta_idx" resultType="java.lang.Integer" order="AFTER">
+  	SELECT LAST_INSERT_ID();
+	</selectKey>  
+</insert>
+
+
+<!-- Read -->
+
+<!-- Get all user -->
+<select id="ta_getByListForAll" resultType="AccountDataVO">
+	SELECT * FROM tbl_account_data
+</select>
+
+<!-- Login -->
+<select id="ta_getByOneForIdAndPw" resultType="AccountDataVO">
+	SELECT * FROM tbl_account_data WHERE ta_id=#{ta_id} AND ta_pw=#{ta_pw}
+</select>
+
+<!-- Check -->
+<select id="ta_getByOneForId" resultType="AccountDataVO">
+	SELECT * FROM tbl_account_data WHERE ta_id=#{ta_id} 
+</select>
+
+<select id="ta_getByOneForPw" resultType="AccountDataVO">
+	SELECT * FROM tbl_account_data WHERE ta_pw=#{ta_pw}
+</select>
+
+
+<!-- Update -->
+<update id="ta_updateForIdx">
+	UPDATE tbl_account_data
+	SET ta_id=#{ta_id}, ta_pw=#{ta_pw}, ta_create_date=#{ta_create_date}, ta_secret_key=#{ta_secret_key}
+	WHERE ta_idx=#{ta_idx}
+</update>
+
+
+<!-- Delete -->
+<delete id="ta_deleteForIndex">
+  DELETE from tbl_account_data WHERE ta_idx=#{ta_idx}
+</delete>
+
+
+</mapper>

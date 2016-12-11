@@ -1,0 +1,12 @@
+# ignore mac default file
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ignore sts default file 
+.classpath
+.project
+.springBeans
+.settings/
+target/
+Users/

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- 
+	<logger name="jdbc.sqlonly" level="DEBUG" />
+	<logger name="jdbc.sqltimeing" level="INFO" />
+	<logger name="jdbc.audit" level="WARN" />
+	<logger name="jdbc.resultest" level="ERROR" />
+	<logger name="jdbc.resultsettable" level="ERROR" />
+	<logger name="jdbc.connection" level="INFO" />
+	 -->
+	
+</configuration>
