@@ -11,4 +11,26 @@
 <br><br><br>
 
 
-# 1. 목차  -> 곧 업데이트… 
+## 사용한 OpenSource 및 기술
+
+* 로그인 화면 <http://codepen.io/ehermanson/pen/KwKWEv>
+* Bootstrap 3.3.6
+* Font-Awesome-4.7.0
+* JQuery 2.2.0
+* JQuery UI 1.11.4
+* SweetAlert2 6.1.1
+* Java 1.8
+* Spring Framework 4.2.6
+* JWT io.jsonwebtoken <https://github.com/jwtk/jjwt>
+
+## Database
+
++----------------+--------------+------+-----+---------------------+----------------+
+| Field          | Type         | Null | Key | Default             | Extra          |
++----------------+--------------+------+-----+---------------------+----------------+
+| ta_idx         | int(10)      | NO   | PRI | NULL                | auto_increment |
+| ta_id          | varchar(60)  | NO   |     | NULL                |                |
+| ta_pw          | varchar(300) | NO   |     | NULL                |                |
+| ta_create_date | timestamp    | NO   |     | 0000-00-00 00:00:00 |                |
+| ta_secret_key  | varchar(300) | NO   |     | NULL                |                |
++----------------+--------------+------+-----+---------------------+----------------+
