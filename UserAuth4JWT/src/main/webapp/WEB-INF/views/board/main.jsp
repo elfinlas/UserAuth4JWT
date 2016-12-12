@@ -14,18 +14,11 @@
 	
 	<!-- CSS  -->
 	<!-- Framework And Lib -->
-	<!-- Bootstrap 3.3.4 -->
-	<link rel="stylesheet" type="text/css" href="/userauth/resources/repo/Bootstrap-3.3.7/css/bootstrap.min.css"/>
-	
-	<!-- Font-Awesome 4.7.0 -->
-	<link rel="stylesheet" type="text/css" href="/userauth/resources/repo/font-awesome-4.7.0/css/font-awesome.min.css"/>
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" type="text/css" href="/userauth/resources/repo/Bootstrap-3.3.6/css/bootstrap.css"/>
 
 	<!-- Sweet-Alert 2.6.1.1 -->
 	<link rel="stylesheet" type="text/css" href="/userauth/resources/repo/Sweetalert2_6.1.1/sweetalert2.min.css"/>
-	
-	
-	<!-- MHLab -->
-	
 	
 </head>
 <body>
@@ -35,28 +28,35 @@
 	
 		<h2>Login User : ${loginId}</h2>
 		
+		<c:if test="${loginId eq 'no-login'}">
+			<button type="button" class="btn btn-danger" onclick="moveLoginBt()">Go to Login</button>
+		</c:if>
+		
 		<c:if test="${tokenMsg eq 'Pass'}">
 			<h2>Token Status : 양호함</h2>
-			<h2>tokenSub : ${tokenSub}</h2>
-			<h2>tokenAud : ${tokenAud}</h2>
-			<h2>tokenJti : ${tokenJti}</h2>
-			<h2>tokenIss : ${tokenIss}</h2>
-			<h2>tokenExDate : ${tokenExDate}</h2>
+			<h2>Token Subject : ${tokenSub}</h2>
+			<h2>Token Audience : ${tokenAud}</h2>
+			<h2>Token Id : ${tokenJti}</h2>
+			<h2>Token Issuer : ${tokenIss}</h2>
+			<h2>Token Expiration Time : ${tokenExDate}</h2>
+			<h2>Token Value : ${tokenStr}</h2>
 		</c:if>
 		
 		<c:if test="${tokenMsg eq 'expiredTokenDate'}">
 			<h2>Token Status : 만료된 토큰</h2>
+			<h2>Token Value : ${tokenStr}</h2>
+			<button type="button" class="btn btn-danger" onclick="logoutBt()">Logout</button>
 		</c:if>
 		
 		<c:if test="${tokenMsg eq 'wrongSign'}">
 			<h2>Token Status : 토큰 서명 오류</h2>
+			<h2>Token Value : ${tokenStr}</h2>
+			<button type="button" class="btn btn-danger" onclick="logoutBt()">Logout</button>
 		</c:if>
 		
 	</div>
 	
 	
-
-
 
 	<!-- Javascript -->
 	<!-- Framework And Lib -->
@@ -66,15 +66,16 @@
 	<!-- jQuery-UI 1.11 -->
 	<script src="/userauth/resources/repo/jQueryUI/jquery-ui.min.js" type="text/javascript"></script>
 
-	<!-- Bootstrap 3.3.7 -->
-	<script src="/userauth/resources/repo/Bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="/userauth/resources/repo/Bootstrap-3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
 
 	<!-- Sweetalert2_6.1.1 -->
 	<script src="/userauth/resources/repo/Sweetalert2_6.1.1/sweetalert2.min.js" type="text/javascript"></script>
 	
 	
 	<!-- MHLab -->
-		
+	<!-- Main -->
+	<script src="/userauth/resources/mhlab/js/ui/board/main.js" type="text/javascript"></script>
 
 </body>
 </html>

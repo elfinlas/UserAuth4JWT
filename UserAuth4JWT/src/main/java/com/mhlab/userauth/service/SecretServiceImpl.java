@@ -32,22 +32,18 @@ import io.jsonwebtoken.impl.crypto.MacProvider;
 
 @Service
 public class SecretServiceImpl implements SecretService {
-
+	private final String TOKEN_FILE_NAME = "token_key"; //토큰 파일 이름
 	
-	@Resource(name="baseSecretPath")
+	@Resource(name="baseSecretPath") //기본 토큰파일이 저장될 경로
 	private String baseSecretPath;
-	
-	private final String TOKEN_FILE_NAME = "token_key"; 
-	
 	
 	@Override
 	public String createToken(String tokenUserId) {
-		String tokenStr = "";
-		String issure = "UserAuth4JWT";
-		String subject = "tokenData~~";
-		Date exDate = new Date(System.currentTimeMillis() + 60000); //1분;
-		Key tokenKey = MacProvider.generateKey(SignatureAlgorithm.HS256);
-		
+		String tokenStr = ""; //토큰 값이 저장될 변수
+		String issure = "UserAuth4JWT"; //토큰 발급자
+		String subject = "tokenData~~"; //토큰의 주제 (즉 토큰에 담길 내용)
+		Date exDate = new Date(System.currentTimeMillis() + 60000); //토큰 만료 시간 (임시로 1분)
+		Key tokenKey = MacProvider.generateKey(SignatureAlgorithm.HS256); //토큰의 서명 알고리즘
 		tokenStr = Jwts.builder()
 				.setIssuer(issure)
 				.setSubject(subject)
@@ -56,49 +52,44 @@ public class SecretServiceImpl implements SecretService {
 				.setExpiration(exDate)
 				.setIssuedAt(new Date())
 				.signWith(SignatureAlgorithm.HS256, tokenKey)
-				.compact();
-		
-		makeHS512KeyFile(tokenKey, tokenUserId); //키 파일을 생성
-		
+				.compact(); //토큰 생성 
+		makeHS512KeyFile(tokenKey, tokenUserId); //토큰 검증을 위해 키를 파일로 생성하고 저장한다.
 		return tokenStr;
 	}
 	
-	
+	@Override
 	public String validToken(String tokenStr, String userId) {
 		String resultMsg = "";
-		
 		try {
 			Jwts.parser().setSigningKey(getKeyObject4File(userId)).parseClaimsJws(tokenStr).getBody();
 			resultMsg="Pass";
 		}
-		catch(ExpiredJwtException eje) {
+		catch(ExpiredJwtException eje) { //토큰의 만료시간이 지난 경우
 			resultMsg = "expiredTokenDate";
 		}
-		catch(SignatureException se) {
+		catch(SignatureException se) { //토큰의 서명 검증이 위조되거나 문제가 생긴 경우
 			resultMsg = "wrongSign";
 		}
 		return resultMsg;
 	}
 	
-	
-	
-	
+	@Override
 	public Map<String, Object> getTokenPayload(String tokenStr) {
 		Map<String, Object> payloadMap = new HashMap<>();
 		ObjectMapper om = new ObjectMapper();
-		String encodedTokenPayload = tokenStr.split("\\.")[1];
-		String tokenPayload = new String(new Base64(true).decode(encodedTokenPayload));
-		
-		try{payloadMap=om.readValue(tokenPayload, new TypeReference<Map<String, Object>>(){});}
-		catch(Exception e){
-			System.out.println("[getTokenPayload] + " + e.getMessage());
-		}
-		
+		String encodedTokenPayload = tokenStr.split("\\.")[1]; //토큰의 바디 부분을 추린다. 
+		String tokenPayload = new String(new Base64(true).decode(encodedTokenPayload)); //토큰의 바디를 디코딩한다.
+		try{payloadMap=om.readValue(tokenPayload, new TypeReference<Map<String, Object>>(){});} //토큰의 값을 Map으로 객체화 시킨다.
+		catch(Exception e){System.out.println("[getTokenPayload] + " + e.getMessage());}
 		return payloadMap;
 	}
 	
 	
-	
+	/**
+	 * 토큰에 사용되는 Key 객체를 파일로 만들어주는 메서드
+	 * @param keyObject 키 객체
+	 * @param userId 키를 생성하게 된 사용자 ID
+	 */
 	private void makeHS512KeyFile(Key keyObject, String userId) {
 		FileChannel fileChannel;
 		String separatorStr = FileSystems.getDefault().getSeparator();
@@ -108,17 +99,9 @@ public class SecretServiceImpl implements SecretService {
 		
 		//토큰파일이 존재하는 경우 삭제해준다.
 		if(Files.exists(Paths.get(tokenPath))) {
-			System.out.println("Delete Old File~~");
 			try{Files.delete(Paths.get(tokenPath));}
 			catch(Exception e){System.out.println("makeHS512KeyFile = " + e.getMessage());}
 		}
-		
-		/*
-		 System.out.println("keyObject toString = " + keyObject.toString());
-		System.out.println("keyObjStr = " + keyObjStr);
-		Key tempKeyObj = new SecretKeySpec(Base64Utils.decodeFromString(keyObjStr), "HmacSHA256");
-		System.out.println("file keyObject toString = " + tempKeyObj.toString());
-		 */
 		
 		try {
 			Files.createDirectories(Paths.get(tokenDir)); //디렉토리 생성
@@ -130,23 +113,23 @@ public class SecretServiceImpl implements SecretService {
 			buffer = charset.encode(keyObjStr);
 			
 			fileChannel.write(buffer);
-			
 			fileChannel.close();
 		}
-		catch(IOException e) {
-			System.out.println("makeHS512KeyFile = " + e.getMessage());
-		}
+		catch(IOException e) {System.out.println("makeHS512KeyFile = " + e.getMessage());}
 	}
 	
 	
+	/**
+	 * 저장된 파일에서 Key 객체를 가져오는 메서드
+	 * @param userID 사용자 Id
+	 * @return 파일에서 받아온 키 객체를 반환한다.
+	 */
 	private Key getKeyObject4File(String userID) {
 		FileChannel fileChannel;
-		
 		String keyStr = "";
 		String separatorStr = FileSystems.getDefault().getSeparator();
 		String tokenDir = baseSecretPath+separatorStr+userID;
 		String tokenPath = tokenDir+separatorStr+TOKEN_FILE_NAME;
-		
 		try {
 			fileChannel = FileChannel.open(Paths.get(tokenPath));
 			ByteBuffer buffers = ByteBuffer.allocateDirect(100);
@@ -166,7 +149,6 @@ public class SecretServiceImpl implements SecretService {
 		catch(IOException e) {
 			System.out.println("getKeyObject4File = " + e.getMessage());
 		}
-		
 		return new SecretKeySpec(Base64Utils.decodeFromString(keyStr), "HmacSHA256");
 	}
 }

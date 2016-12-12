@@ -23,18 +23,14 @@ public class AccountServiceImpl implements AccountService {
 		catch(Exception e){
 			System.out.println("[registerAccount] : " + e.getMessage());
 		}	
-		System.out.println("checkLogin - inputId = " + inputId);
-		System.out.println("checkLogin - inputPw = " + inputPw);
 		return isSuccess;
 	}
 	
 	@Override
 	public String registerAccount(Map<String, Object> regAccData) {
 		String resultMsg="";
-		
 		String inputId = (String)regAccData.get("inputId");
 		String inputPw = (String)regAccData.get("inputPw");
-		
 		try {
 			if(isExistId(inputId)) {resultMsg = "existid";}
 			else {
@@ -46,29 +42,21 @@ public class AccountServiceImpl implements AccountService {
 			resultMsg = "fail";
 			System.out.println("[registerAccount] : " + e.getMessage());
 		}
-		
 		return resultMsg;
 	}
 	
 	
-	
-	
-	
-	
-	
 	/**
-	 * 
-	 * @param ta_id
-	 * @return
+	 * 전달받은 사용자의 Id가 존재하는지 체크하는 메서드
+	 * @param ta_id 체크할 사용자 Id
+	 * @return true-존재 / false-존재하지 않음
 	 */
 	private boolean isExistId(String ta_id){
 		boolean isExist = false;
-		
 		try {if(accountDAO.ta_getByOneForId(ta_id)!=null){isExist=true;}}
 		catch(Exception e) {
 			System.out.println("[isExistId] : " + e.getMessage());
 		}
-		
 		return isExist;
 	}
 	
