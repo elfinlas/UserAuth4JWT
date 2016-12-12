@@ -24,13 +24,13 @@
 * JWT io.jsonwebtoken <https://github.com/jwtk/jjwt>
 
 ## Database
-
-+----------------+--------------+------+-----+---------------------+----------------+
-| Field          | Type         | Null | Key | Default             | Extra          |
-+----------------+--------------+------+-----+---------------------+----------------+
-| ta_idx         | int(10)      | NO   | PRI | NULL                | auto_increment |
-| ta_id          | varchar(60)  | NO   |     | NULL                |                |
-| ta_pw          | varchar(300) | NO   |     | NULL                |                |
-| ta_create_date | timestamp    | NO   |     | 0000-00-00 00:00:00 |                |
-| ta_secret_key  | varchar(300) | NO   |     | NULL                |                |
-+----------------+--------------+------+-----+---------------------+----------------+
+``` sql
+CREATE TABLE `tbl_account_data` (
+  `ta_idx` int(10) NOT NULL AUTO_INCREMENT,
+  `ta_id` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `ta_pw` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  `ta_create_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ta_secret_key` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`ta_idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+```
