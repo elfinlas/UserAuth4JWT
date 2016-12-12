@@ -8,7 +8,7 @@
 **업데이트는 지속적으로 진행하겠지만 Sample 프로젝트이기 때문에 어느정도 완성될 경우 종료될 예정입니다.**  
 **최초 업데이트는 2016년 12월 12일에 이루어졌습니다.**
 
-<br><br><br>
+<br>
 
 
 ## 사용한 OpenSource 및 기술
@@ -23,6 +23,8 @@
 * Spring Framework 4.2.6
 * JWT io.jsonwebtoken <https://github.com/jwtk/jjwt>
 
+<br>
+
 ## Database
 ``` sql
 CREATE TABLE `tbl_account_data` (
@@ -34,3 +36,18 @@ CREATE TABLE `tbl_account_data` (
   PRIMARY KEY (`ta_idx`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
+
+<br>
+
+## 업데이트 이력 
+* 16. 12. 12
+	* 프로젝트 
+* 16. 12. 13
+	* 소스코드 정리 완료 및 1차 개발 완료
+
+<br>
+
+## To-Do
+- [x] 프로젝트 소스코드 정리 -> 2016.12.13 처리
+- [] 설정파일 외부로 빼기
+- [] JWT 구현 처리
