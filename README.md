@@ -2,8 +2,7 @@
 
 
 ## What is UserAuth4JWT Project?
-<br>
-  
+
 **JWT를 이용한 사용자 인증을 처리하는 것을 샘플로 구현한 프로젝트입니다.**  
 **업데이트는 지속적으로 진행하겠지만 Sample 프로젝트이기 때문에 어느정도 완성될 경우 종료될 예정입니다.**  
 **최초 업데이트는 2016년 12월 12일에 이루어졌습니다.**
@@ -22,6 +21,7 @@
 * Java 1.8
 * Spring Framework 4.2.6
 * JWT io.jsonwebtoken <https://github.com/jwtk/jjwt>
+* https://jwt.io
 
 <br>
 
@@ -41,7 +41,7 @@ CREATE TABLE `tbl_account_data` (
 
 ## 업데이트 이력 
 * 16. 12. 12
-	* 프로젝트 
+	* 프로젝트 초기 업데이트 
 * 16. 12. 13
 	* 소스코드 정리 완료 및 1차 개발 완료
 
@@ -49,5 +49,5 @@ CREATE TABLE `tbl_account_data` (
 
 ## To-Do
 - [x] 프로젝트 소스코드 정리 -> 2016.12.13 처리
-- [] 설정파일 외부로 빼기
-- [] JWT 구현 처리
+- [ ] 설정파일 외부로 빼기 (XML 등으로 처리 예정)
+- [x] JWT 구현 처리
