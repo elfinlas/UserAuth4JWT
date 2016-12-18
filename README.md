@@ -23,25 +23,10 @@
 ## How to use?
 
 1. 필요한 데이터베이스 생성 
-	* DB : userauth
-	* Table info 
-	* ``` sql
-CREATE TABLE `tbl_account_data` (
-  `ta_idx` int(10) NOT NULL AUTO_INCREMENT,
-  `ta_id` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `ta_pw` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  `ta_create_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ta_secret_key` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`ta_idx`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-```
+	* 문서 내 <b>Database Table</b>를 참고하세요.
 2. 스프링의 servlet-context.xml 등에서 token 정보가 저장될 경로를 bean으로 등록합니다.
 	* 물론 이 과정은 해당 경로를 다른 식으로 구현할 경우 하지 않아도 됩니다.
-	* ``` xml
-<beans:bean id="baseSecretPath" class="java.lang.String">
-  <beans:constructor-arg value="User-Path"></beans:constructor-arg>
-</beans:bean>
-```
+	* 문서 내 <b>Bean 설정</b>를 참고하세요.
 3. 프로젝트의 설정을 마친 후 서버를 구동하여 다음의 주소로 이동합니다.
 	* localhost:8080/userauth/login/login
 	* 다른 url 이동 시 페이지가 없는 등의 예외는 구현하지 않았습니다.
@@ -73,6 +58,31 @@ CREATE TABLE `tbl_account_data` (
 
 <br>
 	
+## Database Table
+* DB : userauth
+* Table info 
+``` sql
+CREATE TABLE `tbl_account_data` (
+  `ta_idx` int(10) NOT NULL AUTO_INCREMENT,
+  `ta_id` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `ta_pw` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  `ta_create_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ta_secret_key` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`ta_idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+```
+
+<br>
+	
+## Bean 설정
+``` xml
+<beans:bean id="baseSecretPath" class="java.lang.String">
+  <beans:constructor-arg value="User-Path"></beans:constructor-arg>
+</beans:bean>
+```	
+
+<br>
+
 ## Development Environment
 
 * Oracle Java 1.8
