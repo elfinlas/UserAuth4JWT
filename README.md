@@ -25,7 +25,7 @@
 1. 필요한 데이터베이스 생성 
 	* DB : userauth
 	* Table info 
-``` sql
+	* ``` sql
 CREATE TABLE `tbl_account_data` (
   `ta_idx` int(10) NOT NULL AUTO_INCREMENT,
   `ta_id` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `tbl_account_data` (
 ```
 2. 스프링의 servlet-context.xml 등에서 token 정보가 저장될 경로를 bean으로 등록합니다.
 	* 물론 이 과정은 해당 경로를 다른 식으로 구현할 경우 하지 않아도 됩니다.
-``` xml
+	* ``` xml
 <beans:bean id="baseSecretPath" class="java.lang.String">
   <beans:constructor-arg value="User-Path"></beans:constructor-arg>
 </beans:bean>
@@ -55,7 +55,9 @@ CREATE TABLE `tbl_account_data` (
 	* ![](https://github.com/elfinlas/UserAuth4JWT/blob/master/img/jwt01.png?raw=true)
 7. 토큰의 만료시간이 지나면 다음과 같이 창이 뜹니다.
 	* ![](https://github.com/elfinlas/UserAuth4JWT/blob/master/img/jtw02.png?raw=true)
-
+8. 만약 로그인하지 않은 상태에서 localhost:8080/userauth/board/main 으로 이동 시 다음과 같이 뜹니다.
+	* ![](https://github.com/elfinlas/UserAuth4JWT/blob/master/img/nologin.png?raw=true)
+	
 <br>
 
 ## JWT Valid
